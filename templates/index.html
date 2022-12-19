@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block title %} Beauty World Inventory Manager {% endblock title %}
+{% block content %}
+    
+    <h1>Welcome to Beauty World Inventory Manager</h1>
+    {% for i in data %}
+        <p> {{i}} </p>
+    {% endfor %}
+
+{% endblock content %}
