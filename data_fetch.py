@@ -1,9 +1,10 @@
 import pandas as pd
 import openpyxl as op
 from datetime import datetime
+from pprint import pprint
 
 def fetchItem(name: str):
-    df = pd.read_excel('data_files/test.xlsx', sheet_name='Items')
+    df = pd.read_excel('data_files/stock.xlsx', sheet_name='Items')
     if(name in (df.loc[:, 'Name']).to_list()):
         ind = (df.loc[:, 'Name']).to_list().index(name)
         item = {}
@@ -17,17 +18,17 @@ def fetchItem(name: str):
 # fetchItem(10)
 
 def fetchAll() -> list:
-    df = pd.read_excel('data_files/test.xlsx', sheet_name='Items')
+    df = pd.read_excel('data_files/stock.xlsx', sheet_name='Inventory')
     dic =  df.loc[:].to_dict()
     li = []
-    for val in dic['Name'].values():
+    for val in dic.values():
         li.append(val)
-    print (li)
+    # print (li)
     return li
 # fetchAll()
 
 def fetchAllSold():
-    df = pd.read_excel('data_files/test.xlsx', sheet_name='Sales')
+    df = pd.read_excel('data_files/stock.xlsx', sheet_name='Sales')
     dic =  df.loc[:].to_dict()
     la = {}
     li = {}
@@ -59,7 +60,7 @@ def setSales(id, quantity: int, customer: str):
     print(total)
     
     rows = df.values.tolist()
-    book = op.load_workbook(filename = 'data_files/test.xlsx')
+    book = op.load_workbook(filename = 'data_files/stock.xlsx')
     sheet = book['Sales']
     sheet.delete_rows(idx=17)
     for row in rows:
@@ -85,10 +86,15 @@ def set_items(description: str, category: int, made_in: str, size: float, unit: 
     book.save(filename='data_files/stock.xlsx')
 #remove stock
 def delete_item():
-    book = op.load_workbook(filename = 'data_files/stock.xlsx')
-    sheet = book['Inventory']
-    sheet.delete_rows(idx=2, amount=3)
+    df = pd.read_excel('data_files/stock.xlsx', sheet_name='Inventory', index_col=0)
+    print(df.drop('col', inplace=True))
     
-
-set_items('col', 'stock', 'eth', 12, 'pcs',23, 921321546465, 10.5)
-delete_item()
+    rows = df.values.tolist()
+    book = op.load_workbook(filename='data_files/stock.xlsx')
+    sheet = book['Inventory']
+    for row in rows:
+        sheet.append(row)
+    book.save(filename='data_files/stock.xlsx')
+    
+set_items('colpp', 'stock', 'eth', 12, 'pcs',23, 921321546465, 10.5)
+# delete_item()
