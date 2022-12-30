@@ -1,10 +1,38 @@
 {% extends "layout.html" %}
 {% block title %} Beauty World Inventory Manager {% endblock title %}
-{% block content %}
-    
-    <h1>Welcome to Beauty World Inventory Manager</h1>
-    {% for i in data %}
-        <p> {{i}} </p>
-    {% endfor %}
 
-{% endblock content %}
+{% block content %}
+    <h1>Welcome to Beauty World Inventory Manager</h1>
+    <table class="sales">
+        <tr>
+            <th>Item Desc</th>
+            <th>Category</th>
+            <th>Made in</th>
+            <th>Size/ml-g-oz</th>
+            <th>Unit</th>
+            <th>Quantity</th>
+            <th>Bar Code</th>
+            <th>Unit Price</th>
+            <th>45% Profit</th>
+            <th>Unit Price after profit</th>
+            <th>VAT</th>
+            <th>Total</th>
+            <th>On hand qty</th>
+            <th>Sold qty</th>
+            <th>Total sales</th>
+        </tr>
+        {% for entry in data %}
+            <tr>
+                {% for key in data[entry].keys() %}
+                    {% if key == "Bar Code" %}
+                        <td>{{ data[entry][key] }}</td>
+                    {% else %}
+                        <td>{{data[entry][key]}}</td>
+                    {% endif %}
+                {% endfor %}
+                <td id='edit'><a href="/edit/{{data[entry]['Item Desc']}}">Edit</a></td>
+                <td id='delete'><a href="/delete/{{data[entry]['Item Desc']}}">Delete</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
