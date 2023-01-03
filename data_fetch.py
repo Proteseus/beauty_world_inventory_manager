@@ -58,17 +58,18 @@ def fetchItem(name: str):
     df = pd.read_excel('data_files/test.xlsx', sheet_name='Inventory')
     # print(df)
     if name in (df.loc[:, 'Item Desc']).to_list():
-        ind = (df.loc[:, 'Item Desc']).to_list().index(name)
-        item = {"id": ind, "name": df.loc[:, 'Item Desc'].to_list()[ind],
-                "price": df.loc[:, 'Unit Price'].to_list()[ind], 'available': df.loc[:, 'On hand qty'].to_list()[ind]}
+        idx = (df.loc[:, 'Item Desc']).to_list().index(name)
+        item = {"id": idx, "name": df.loc[:, 'Item Desc'].to_list()[idx],
+                "category": df.loc[:, 'Category'].to_list()[idx], "made in": df.loc[:, 'Made in'].to_list()[idx],
+                "size": df.loc[:, 'Size/ml-g-oz'].to_list()[idx], "price": df.loc[:, 'Unit Price'].to_list()[idx],
+                "profit": df.loc[:, 'Profit'].to_list()[idx], "available": df.loc[:, 'On hand qty'].to_list()[idx]}
         print(item, "\n")
         return item
     else:
         print(df)
         return -1
-
-
 # fetchItem(10)
+
 
 def fetchAll():
     df = pd.read_excel('data_files/test.xlsx', sheet_name='Inventory')
@@ -112,28 +113,28 @@ def calculateSales(price, quantity: int):
 
 # calculateSales(10, 20)
 
-def modify(id: str, quantity: int):
-    item = fetchItem(id)
+def modify_after_sale(item_name: str, quantity: int):
+    item = fetchItem(item_name)
     df_items = pd.read_excel(io='data_files/test.xlsx', sheet_name='Inventory', index_col='Item Desc')
-    print(df_items.loc[id, 'On hand qty'])
+    print(df_items.loc[item_name, 'On hand qty'])
 
-    if df_items.loc[id, 'On hand qty'] < quantity:
+    if df_items.loc[item_name, 'On hand qty'] < quantity:
         return False
 
     book = op.load_workbook(filename='data_files/test.xlsx')
     sheet = book['Inventory']
-    sheet.cell(row=item['id'] + 2, column=13).value = df_items.loc[id, 'On hand qty'] - quantity
+    sheet.cell(row=item['id'] + 2, column=13).value = df_items.loc[item_name, 'On hand qty'] - quantity
     book.save(filename='data_files/test.xlsx')
-
-
+    print(df_items.loc[item_name, 'On hand qty'])
 # modify("lop", 2)
+
 
 # modify sales for inventory file
 def setSales(id: str, quantity: int, customer: str):
     item = fetchItem(id)
 
     if quantity > item['available']:
-        print(f"Not enough in stock, only {item['available']} are avialable")
+        print(f"Not enough in stock, only {item['available']} are available")
         return False
 
     total = calculateSales(item['price'], quantity)
@@ -152,12 +153,11 @@ def setSales(id: str, quantity: int, customer: str):
     book.save(filename='data_files/test.xlsx')
 
     # modify inventory data
-    modify(id, quantity)
+    modify_after_sale(id, quantity)
 
     return total
+# setSales(id='glop', quantity=10, customer='lewi')
 
-
-# setSales(id='lop', quantity=10, customer='lewi')
 
 # set new items to file
 def set_items(description: str, category: str, made_in: str, size: float, unit: str, quantity: int, bar_code: int,
@@ -179,14 +179,12 @@ def set_items(description: str, category: str, made_in: str, size: float, unit: 
     for row in rows:
         sheet.append(row)
     book.save(filename='data_files/test.xlsx')
-
-
-# set_items('glop', 'stock', 'eth', 12, 'pcs', 23, 921321546465, 10.5)
+# set_items('glplpp', 'stock', 'eth', 12, 'pcs', 23, 921321546465, 10.5)
 
 
 # remove stock
-def delete_item(itemId):
-    item = fetchItem(itemId)
+def delete_item(item_id: str):
+    item = fetchItem(item_id)
     df = pd.read_excel(io='data_files/test.xlsx', sheet_name='Inventory')
     if int(df.count()['Item Desc']) < item["id"] + 1:
         pass
@@ -209,3 +207,15 @@ def delete_item(itemId):
     if df.columns.size == 0:
         initializer()
 # delete_item('glop')
+
+# edit item data
+def edit(item_id: str, edited_item: dict):
+    item = fetchItem(item_id)
+    df_items = pd.read_excel(io='data_files/test.xlsx', sheet_name='Inventory', index_col='Item Desc')
+    print(df_items.loc[item_id, 'On hand qty'])
+
+    book = op.load_workbook(filename='data_files/test.xlsx')
+    sheet = book['Inventory']
+    for idx in edited_item:
+        sheet.cell(row=item['id'] + 2, column=idx).value = edited_item[idx]
+    book.save(filename='data_files/test.xlsx')

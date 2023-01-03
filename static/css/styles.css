@@ -1,5 +1,7 @@
 body {
     background-color: black;
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar {
@@ -94,4 +96,22 @@ a {
 
 #delete {
     background-color: red;
+}
+
+#item-edit-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    align-items: flex-end;
+    align-self: center;
+}
+
+#item-edit-form label {
+    color: white;
+    margin: 5px;
+}
+
+#item-edit-form input {
+    background-color: lightblue;
+    align-self: center;
 }
