@@ -1,5 +1,6 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, flash, url_for
 import data_fetch as dd
+from forms import AddItemForm
 
 app = Flask(__name__)
 
@@ -12,8 +13,24 @@ def index():
     return render_template('index.html', data=data)
 
 
+@app.route('/add/', methods=['POST', 'GET'])
+def add():
+    form = AddItemForm(request.form)
+    if request.method == 'POST' and form.validate():
+        items = [form.name.data, form.category.data, form.made_in.data, form.size.data, form.unit.data,
+                 form.quantity.data, form.barcode.data, form.price.data]
+        item_key = ["Item Desc", "Category", "Made in", "Size/ml-g-oz", "Unit", "Quantity", "Bar Code", "Unit Price"]
+        item = {}
+        for idx, i_key in enumerate(item_key):
+            item[i_key] = items[idx]
+        print(item)
+        dd.set_i(item)
+        return redirect('/')
+    return render_template('add_listings.html', form=form)
+
+
 @app.route('/edit/<item_name>', methods=['GET'])
-def edit(item_name: str ):
+def edit(item_name: str):
     data = dd.fetchItem(item_name)
     for ind in data:
         print(ind)

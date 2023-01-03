@@ -98,6 +98,24 @@ a {
     background-color: red;
 }
 
+#item-add-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    align-items: center;
+    align-self: center;
+}
+
+#item-add-form dt {
+    color: white;
+    margin: 5px;
+}
+
+#item-add-form dd {
+    background-color: lightblue;
+    align-self: center;
+}
+
 #item-edit-form {
     display: flex;
     flex-direction: column;
@@ -114,4 +132,12 @@ a {
 #item-edit-form input {
     background-color: lightblue;
     align-self: center;
+}
+
+#add-item {
+    max-width: 100px;
+    height: 40px;
+    background-color: deepskyblue;
+    color: black;
+    border-radius: 10px;
 }

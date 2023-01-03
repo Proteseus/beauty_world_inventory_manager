@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% from "_formhelpers.html" import render_field %}
+{% block content %}
+<form id="item-add-form" method=post>
+  <dl>
+    {{ render_field(form.name) }}
+    {{ render_field(form.category) }}
+    {{ render_field(form.made_in) }}
+    {{ render_field(form.size) }}
+    {{ render_field(form.unit) }}
+    {{ render_field(form.quantity) }}
+    {{ render_field(form.barcode) }}
+    {{ render_field(form.price) }}
+  </dl>
+  <p><input type=submit value=Add>
+</form>
+{% endblock content %}

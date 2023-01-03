@@ -182,6 +182,32 @@ def set_items(description: str, category: str, made_in: str, size: float, unit: 
 # set_items('glplpp', 'stock', 'eth', 12, 'pcs', 23, 921321546465, 10.5)
 
 
+def set_i(items: dict):
+    profit = float(items['Unit Price']) * 0.45
+    profit_added_price = float(items['Unit Price']) + profit
+    vat = profit_added_price * 0.15
+    total = vat + profit_added_price
+
+    items["45% Profit"] = "%.2f" % profit
+    items["Unit Price after profit"] = "%.2f" % profit_added_price
+    items["VAT"] = "%.2f" % vat
+    items["Total"] = "%.2f" % total
+    items["On hand qty"] = items['Quantity']
+    items["Sold qty"] = 0
+    items["Total sales"] = 0
+    print(">>Item added", items)
+
+    item = [items]
+    df = pd.DataFrame(item)
+    rows = df.values.tolist()
+    book = op.load_workbook(filename='data_files/test.xlsx')
+    sheet = book['Inventory']
+
+    for row in rows:
+        sheet.append(row)
+    book.save(filename='data_files/test.xlsx')
+
+
 # remove stock
 def delete_item(item_id: str):
     item = fetchItem(item_id)
