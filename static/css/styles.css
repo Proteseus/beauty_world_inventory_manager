@@ -1,14 +1,11 @@
 body {
-    background-color: black;
+    background-color: cadetblue;
     display: flex;
     flex-direction: column;
 }
 
 .navbar {
-    position: relative;
-    left: 48%;
-    padding-bottom: 10px;
-    width: 100px;
+    align-self: center;
 }
 
 .sales-container {
@@ -16,17 +13,16 @@ body {
     flex-direction: column;
     align-items: center;
     align-self: center;
-    margin: 0px 500px 0px 500px;
+    margin: 0 500px 0 500px;
     border: 1px solid black;
     border-radius: 15px;
     padding: 10px;
-    
     background-color: brown;
 }
 
 @media only screen and (max-width: 1600px) {
     .sales-container {
-        margin: 0% auto 0% auto;
+        margin: 0 auto 0 auto;
     }
 }
 
@@ -140,4 +136,70 @@ a {
     background-color: deepskyblue;
     color: black;
     border-radius: 10px;
+}
+
+#item-sale-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    align-items: center;
+    align-self: center;
+}
+
+#item-sale-form dt {
+    color: white;
+    margin: 5px;
+}
+
+#item-sale-form dd {
+    background-color: lightblue;
+    align-self: center;
+}
+
+#item-sale-form select {
+    background-color: lightblue;
+    align-self: center;
+    width: 100%;
+}
+
+#warning {
+    color: white;
+    font-family: monospace;
+    font-size: 15px;
+}
+
+/* Overlay card styles */
+.overlay-card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.overlay-content {
+    background-color: white;
+    border: 1px solid black;
+    padding: 20px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.overlay-item {
+    margin: 10px 0;
+}
+.overlay-label {
+    font-weight: bold;
+}
+.overlay-button {
+    width: 75px;
+    height: 30px;
+    background-color: lightgreen;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
 }

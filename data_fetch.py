@@ -1,7 +1,8 @@
 import pandas as pd
 import openpyxl as op
 from datetime import datetime
-from pprint import pprint
+
+from pandas import DataFrame
 
 
 def initializer():
@@ -49,12 +50,10 @@ def initializer():
         print("Sales sheet column labels created")
     else:
         print("Sales sheet already has column labels")
+# initializer()
 
 
-initializer()
-
-
-def fetchItem(name: str):
+def fetch_item(name: str):
     df = pd.read_excel('data_files/test.xlsx', sheet_name='Inventory')
     # print(df)
     if name in (df.loc[:, 'Item Desc']).to_list():
@@ -68,13 +67,12 @@ def fetchItem(name: str):
     else:
         print(df)
         return -1
-# fetchItem(10)
+# fetch_item(10)
 
 
-def fetchAll():
+def fetch_all():
     df = pd.read_excel('data_files/test.xlsx', sheet_name='Inventory')
     dic = df.loc[:].to_dict()
-    la = {}
     li = {}
     # k = open('kk.json', 'w')
     for i in range(0, len(df)):
@@ -83,16 +81,16 @@ def fetchAll():
             if len(li[i]) == 0:
                 li[i] = {key: ""}
             li[i][key] = dic[key][i]
+    print(li)
     return li
 
 
-# pprint(fetchAll(), indent=4)
+# pprint(fetch_all(), indent=4)
 
-def fetchAllSold():
+def fetch_all_sold():
     df = pd.read_excel('data_files/test.xlsx', sheet_name='Sales')
-    dic = df.loc[:].to_dict()
-    la = {}
-    li = {}
+    dic: dict = df.loc[:].to_dict()
+    li: dict = {}
     # k = open('kk.json', 'w')
     for i in range(0, len(df)):
         li[i] = {}
@@ -103,18 +101,18 @@ def fetchAllSold():
     return li
 
 
-# fetchAllSold()
+# fetch_all_sold()
 
-def calculateSales(price, quantity: int):
+def calculate_sales(price, quantity: int):
     total = int(quantity) * price
     print(total)
     return total
 
 
-# calculateSales(10, 20)
+# calculate_sales(10, 20)
 
 def modify_after_sale(item_name: str, quantity: int):
-    item = fetchItem(item_name)
+    item = fetch_item(item_name)
     df_items = pd.read_excel(io='data_files/test.xlsx', sheet_name='Inventory', index_col='Item Desc')
     print(df_items.loc[item_name, 'On hand qty'])
 
@@ -130,15 +128,15 @@ def modify_after_sale(item_name: str, quantity: int):
 
 
 # modify sales for inventory file
-def setSales(id: str, quantity: int, customer: str):
-    item = fetchItem(id)
+def set_sales(item_id: str, quantity: int, customer: str):
+    item = fetch_item(item_id)
 
-    if quantity > item['available']:
-        print(f"Not enough in stock, only {item['available']} are available")
-        return False
+    if int(quantity) > item['available']:
+        # print(f"Not enough in stock, only {item['available']} are available")
+        return False, item['available']
 
-    total = calculateSales(item['price'], quantity)
-    sale = [{"Item Desc": id, "Price": item["price"], "Quantity": quantity, "Total": total, "Customer": customer,
+    total = calculate_sales(item['price'], int(quantity))
+    sale = [{"Item Desc": item_id, "Price": item["price"], "Quantity": quantity, "Total": total, "Customer": customer,
              "Time": datetime.now().strftime('%Y-%m-%d %H:%M:%S')}]
     df = pd.DataFrame(sale)
 
@@ -153,36 +151,14 @@ def setSales(id: str, quantity: int, customer: str):
     book.save(filename='data_files/test.xlsx')
 
     # modify inventory data
-    modify_after_sale(id, quantity)
+    modify_after_sale(item_id, int(quantity))
 
-    return total
-# setSales(id='glop', quantity=10, customer='lewi')
+    return True, item['available']
+# set_sales(id='glop', quantity=10, customer='lewi')
 
 
 # set new items to file
-def set_items(description: str, category: str, made_in: str, size: float, unit: str, quantity: int, bar_code: int,
-              price: float):
-    profit_margin = price * 0.45
-    profit_added_price = price + (price * 0.45)
-    VAT = profit_margin * 0.15
-    total = VAT + profit_added_price
-    item = [{"Item Desc": description, "Category": category, "Made in": made_in, "Size/ml-g-oz": size, "Unit": unit,
-             "Quantity": quantity, "Bar Code": int(bar_code), "Unit Price": price, "45% Profit": "%.2f" % profit_margin,
-             "Unit Price after profit": "%.2f" % profit_added_price, "VAT": "%.2f" % VAT, "Total": "%.2f" % total,
-             "On hand qty": quantity, "Sold qty": "%.2f" % 0, "Total sales": "%.2f" % 0}]
-
-    df = pd.DataFrame(item)
-    rows = df.values.tolist()
-    book = op.load_workbook(filename='data_files/test.xlsx')
-    sheet = book['Inventory']
-
-    for row in rows:
-        sheet.append(row)
-    book.save(filename='data_files/test.xlsx')
-# set_items('glplpp', 'stock', 'eth', 12, 'pcs', 23, 921321546465, 10.5)
-
-
-def set_i(items: dict):
+def set_items(items: dict):
     profit = float(items['Unit Price']) * 0.45
     profit_added_price = float(items['Unit Price']) + profit
     vat = profit_added_price * 0.15
@@ -198,7 +174,7 @@ def set_i(items: dict):
     print(">>Item added", items)
 
     item = [items]
-    df = pd.DataFrame(item)
+    df: DataFrame = pd.DataFrame(item)
     rows = df.values.tolist()
     book = op.load_workbook(filename='data_files/test.xlsx')
     sheet = book['Inventory']
@@ -210,7 +186,7 @@ def set_i(items: dict):
 
 # remove stock
 def delete_item(item_id: str):
-    item = fetchItem(item_id)
+    item = fetch_item(item_id)
     df = pd.read_excel(io='data_files/test.xlsx', sheet_name='Inventory')
     if int(df.count()['Item Desc']) < item["id"] + 1:
         pass
@@ -236,8 +212,8 @@ def delete_item(item_id: str):
 
 
 # edit item data
-def edit(item_id: str, edited_item: dict):
-    item = fetchItem(item_id)
+def edit_item(item_id: str, edited_item: dict):
+    item = fetch_item(item_id)
     df_items = pd.read_excel(io='data_files/test.xlsx', sheet_name='Inventory', index_col='Item Desc')
     print(df_items.loc[item_id, 'On hand qty'])
 
@@ -246,3 +222,6 @@ def edit(item_id: str, edited_item: dict):
     for idx in edited_item:
         sheet.cell(row=item['id'] + 2, column=idx).value = edited_item[idx]
     book.save(filename='data_files/test.xlsx')
+
+
+# expiry date notification
