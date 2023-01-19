@@ -1,0 +1,74 @@
+{% extends "layout.html" %}
+{% block content %}
+    <form class="container" id="item-sale-form" method=post>
+{#        <dl>#}
+{#            {{ render_field(form.name) }}#}
+{#            {{ render_field(form.quantity) }}#}
+{#            {{ render_field(form.customer) }}#}
+{#        </dl>#}
+        <label for="name">
+            Name:
+        </label>
+            <select name="name" id='name-selector'>
+                {% for item in items %}
+                    <option value={{ item }}>{{ item }}</option>
+                {% endfor %}
+            </select>
+        <label for="quantity">
+            Quantity:
+        </label>
+            <input type="text" name="quantity" id='quantity-input'/>
+        <label for="customer">
+            Customer:
+        </label>
+            <input type="text" name="customer" id='customer-input'/>
+        <input type=submit value=Sale id="sale-button">
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="warning">{{ messages[0] }}</p>
+        {% endif %}
+        {% endwith %}
+    </form>
+
+    <!-- Overlay card -->
+    <!-- Modal -->
+    <dialog id="modal-example">
+    <article>
+    <a href="#close"
+        aria-label="Close"
+        class="close"
+        data-target="modal-example"
+        onClick="closeModal()">
+    </a>
+    <h3>Confirm your action!</h3>
+    <div class="overlay-item">
+        <span class="overlay-label">Product:</span>
+        <span id="name-display"></span>
+    </div>
+    <div class="overlay-item">
+        <span class="overlay-label">Quantity:</span>
+        <span id="quantity-display"></span>
+    </div>
+    <div class="overlay-item">
+        <span class="overlay-label">Customer:</span>
+        <span id="customer-display"></span>
+    </div>
+    <footer>
+        <a href="#cancel"
+        role="button"
+        class="secondary"
+        data-target="modal-example"
+        id="cancel-button">
+        Cancel
+        </a>
+        <a href="#confirm"
+        role="button"
+        data-target="modal-example"
+        id="confirm-button">
+        Confirm
+        </a>
+    </footer>
+    </article>
+    </dialog>
+{% endblock content %}

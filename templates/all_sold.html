@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %} Beauty World Inventory Manager {% endblock title %}
+
+{% block content %}
+    <h1>Welcome to Beauty World Inventory Manager</h1>
+    <table class="container">
+        <thead>
+            <tr>
+                <th scope="col">Item Desc</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entry in data %}
+            <tr>
+                {% for key in data[entry].keys() %}
+                    {% if key == "Bar Code" %}
+                        <td>{{ data[entry][key] }}</td>
+                    {% else %}
+                        <td>{{data[entry][key]}}</td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+        <tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,51 @@
+@import "pico.min.css";
+:root {
+  --primary: #d81b60;
+  max-width: 100%;
+}
+
+.sidenav {
+  height: 100%;
+  width: 300px;
+  position: fixed;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.sidenav h1 {
+  padding-left: 10px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+.op-grid {
+  display: grid;
+  grid-template-columns: 18% auto;
+}
+
+.op-grid-child {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+#add-item {
+  max-width: 100px;
+}
+
+/*# sourceMappingURL=pico-mod.css.map */

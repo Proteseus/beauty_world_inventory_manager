@@ -1,0 +1,41 @@
+{% extends 'layout.html' %}
+{% block title %} Add Item {% endblock title %}
+
+{% block content %}
+    <form class="container c" id="item-edit-form" name="item-edit" action="/add" method="post">
+        <label for="name">
+            Name:
+        </label>
+            <input type="text" name="name" />
+        <label for="category">
+            Category:
+        </label>
+            <input type="text" name="category" />
+        <label for="made_in">
+            Made in:
+        </label>
+            <input type="text" name="made_in" />
+        <label for="size">
+            Size:
+        </label>
+            <input type="number" name="size" />
+        <label for="unit">
+            Unit:
+        </label>
+            <input type="text" name="unit" />
+        <label for="quantity">
+            Quantity:
+        </label>
+            <input type="number" name="quantity" />
+        <label for="barcode">
+            Barcode:
+        </label>
+            <input type="number" name="barcode" />
+        <label for="price">
+            Unit Price:
+        </label>
+            <input type="number" name="price" step=".01" />
+        <button type="submit">Save</button>
+    </form>
+
+{% endblock content %}
