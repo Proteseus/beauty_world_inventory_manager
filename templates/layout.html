@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/pico-mod.css')}}"/>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body class="op-grid" id="op-grid">
+    <div id="mySidebar" class="sidenav col">
+        <a href="javascript:void(0)" class="close-btn" onclick="closeNav()">&times;</a>
+        <h2>Beauty World</h2>
+        <a href="/">Inventory</a>
+        <a href="/sales">Sales</a>
+        <a href="/sold">Sold</a>
+        <a href="/supplier">Suppliers</a>
+        <a href="/report">Report</a>
+        <a href="/logout">Logout</a>
+        <a href="/stopServer">Exit</a>
+    </div>
+
+    <div id="main">
+      <button id="open-nav" aria-label="closed" class="open-btn" onclick="openNav()">&#9776;</button>
+    </div>
+
+    <main class="op-grid-child">
+        {% block content%}
+
+        {% endblock %}
+    </main>
+    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/modal.js') }}"></script>
+</body>
+</html>

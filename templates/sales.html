@@ -1,0 +1,132 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="access-warning">{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    <input class="container" id="cart_button" type="button" onclick="openKart()" value="Cart">
+    <form class="container" id="item-sale-form" action="/sales/" method=post>
+
+        <label for="name">
+            Name:
+        </label>
+            <input type="text" name="name" list="itemsList" id="sales-name-selector"/>
+            <datalist id="itemsList" id="itemsList">
+                {% for item in items %}
+                    <option value="{{item}}">
+                {% endfor %}
+            </datalist>
+
+        <label for="barcode">
+            Barcode:
+        </label>
+            <input type="number" name="barcode" id='sales-barcode-input' step="1" onchange="mod()" />
+        <label for="quantity">
+            Quantity:
+        </label>
+            <input type="text" name="quantity" id='quantity-input'/>
+        <label for="customer">
+            Customer:
+        </label>
+            <input type="text" name="customer" id='customer-input'/>
+        <label for="phone_number">
+            Phone:
+        </label>
+            <input type="text" name="phone_number" id='phone_number-input'/>
+        <input type=submit value="Add to Cart" id="sale-button">
+
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="warning">{{ messages[0] }}</p>
+        {% endif %}
+        {% endwith %}
+    </form>
+
+
+    <!-- Overlay card -->
+    <!-- Modal -->
+    <dialog id="modal-example">
+    <article>
+    <a href="#close"
+        aria-label="Close"
+        class="close"
+        data-target="modal-example"
+        onClick="closeModal()">
+    </a>
+    <h3>Confirm your action!</h3>
+    <div class="overlay-item">
+        <span class="overlay-label">Product:</span>
+        <span id="name-display"></span>
+    </div>
+    <div class="overlay-item">
+        <span class="overlay-label">Quantity:</span>
+        <span id="quantity-display"></span>
+    </div>
+    <div class="overlay-item">
+        <span class="overlay-label">Customer:</span>
+        <span id="customer-display"></span>
+    </div>
+    <footer>
+        <a href="#cancel"
+        role="button"
+        class="secondary"
+        data-target="modal-example"
+        id="cancel-button">
+        Cancel
+        </a>
+        <a href="#confirm"
+        role="button"
+        data-target="modal-example"
+        id="confirm-button">
+        Confirm
+        </a>
+    </footer>
+    </article>
+    </dialog>
+
+    {# cart component #}
+    <div id="kart-overlay">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            {% for items in kart %}
+                <tr>
+                    <td>{{ items[0] }}</td>
+                    <td>{{ items[1] }}</td>
+                    <td>{{ items[2] }}</td>
+
+                    <td><a id="remove_cart_item" role="button" href="/remove_from_cart/{{ items[0] }}">X</a></td>
+                </tr>
+            {% endfor %}
+            <tfoot>
+                <tr>
+                    <td></td>
+                    <td>Total</td>
+                    <td>{{ total }}</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        <input type="button" value="Checkout" onclick="window.location.href='/checkout'">
+    </div>
+    <div id="kart-checkout-details">
+        <form action="/checkout" method="post">
+             <label for="name">
+                Customer:
+            </label>
+                <input name="name" type="text" placeholder="Customer"/>
+            <label>
+                Phone:
+            </label>
+                <input name="phone" type="text" placeholder="Phone Number"/>
+            <input type="button" value="Proceed">
+        </form>
+    </div>
+{% endblock content %}

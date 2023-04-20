@@ -1,0 +1,15 @@
+{% extends 'layout.html' %}
+{% block title %} Sign In {% endblock title %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="access-warning">{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    <div class="grid">
+        <input type="button" name="daily" value="Daily" onclick="window.location.href='/daily_report'"/>
+        <input type="button" name="monthly" value="Monthly" onclick="window.location.href='/monthly_report'"/>
+        <input type="button" name="annual" value="Annual" onclick="window.location.href='/annual_report'"/>
+    </div>
+{% endblock content %}

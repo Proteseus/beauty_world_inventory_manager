@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block title %} Beauty World Inventory Manager {% endblock title %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="access-warning">{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+{#    <a id="add-item" href="/add/"><button id="add-item">Add</button></a>#}
+    <input class="container" id="add-item" type="button" onclick="window.location.href='/add'" value="Add" >
+    <table class="container" role="grid">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Made</th>
+                <th>Size/ml-g-oz</th>
+                <th>Unit</th>
+                <th>Qty</th>
+                <th>Barcode</th>
+                <th>Unit Price</th>
+                <th>Profit</th>
+                <th>Final Price</th>
+                <th>On hand</th>
+                <th>Expiry Date</th>
+            </tr>
+        </thead>
+        {% for entry in data %}
+            <tr>
+                {% for key in entry %}
+                    <td>{{ key }}</td>
+                {% endfor %}
+                <td><a id='edit' role="button" href="/edit/{{entry[0]}}">Edit</a></td>
+                <td><a id='delete' role="button" href="/delete/{{entry[0]}}">Delete</a></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

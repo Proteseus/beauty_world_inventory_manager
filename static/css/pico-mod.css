@@ -1,0 +1,201 @@
+@import "pico.min.css";
+:root {
+  --primary: #d81b60;
+  max-width: 100%;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 10px;
+  transition: 0.5s;
+}
+
+.sidenav h2 {
+  padding-left: 10px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  margin: 2px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+  background-color: #11191f;
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* The button used to open the sidebar */
+.open-btn {
+  position: absolute;
+  font-size: 20px;
+  width: 50px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  /*z-index: 2;*/
+}
+
+.open-btn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s; /* If you want a transition effect */
+  padding: 20px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+
+.op-grid {
+  display: grid;
+  grid-template-columns: 20px auto;
+}
+
+.op-grid-child {
+  /*z-index: -2;*/
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+#add-item {
+  max-width: 100px;
+  height: 60px;
+  margin-top: 25px;
+}
+
+.add-items {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-column-gap: 15px;
+}
+
+.col-0 {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.col-1 {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.col-2 {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.row-1 {
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.row-2 {
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.row-3 {
+  grid-row-start: 5;
+  grid-row-end: 6;
+}
+
+.row-4 {
+  grid-row-start: 7;
+  grid-row-end: 8;
+}
+
+.row-5 {
+  grid-row-start: 9;
+  grid-row-end: 10;
+}
+
+#login-page input, a{
+  margin-left: 10%;
+}
+
+#login-page input{
+  max-width: 650px;
+}
+
+#item-edit-form input, a{
+  margin-left: 15%;
+}
+
+#item-edit-form input{
+  max-width: 650px;
+}
+
+.signup {
+  display: block;
+}
+
+#access-warning {
+  margin-left: 20%;
+  color: red;
+}
+
+#edit, #delete{
+  padding: 8px;
+}
+
+#cart_button {
+  max-width: 100px;
+  height: 60px;
+  margin-top: 25px;
+}
+
+/*kart overlay*/
+#kart-overlay {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  max-width: 600px;
+  top: 5px;
+  left: 25%;
+  /*right: 0;*/
+  /*bottom: 0;*/
+  background-color: #1f2d38; /* Black background with opacity */
+  z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+  transition: 0.3s;
+}
+
+/*kart overlay*/
+#kart-checkout-details {
+  position: fixed; /* Sit on top of the page content */
+  display: none; /* Hidden by default */
+  max-width: 300px;
+  top: 5px;
+  left: 50%;
+  /*right: 0;*/
+  /*bottom: 0;*/
+  background-color: #1f2d38; /* Black background with opacity */
+  z-index: 3; /* Specify a stack order in case you're using a different order for other elements */
+  cursor: pointer; /* Add a pointer on hover */
+  transition: 0.3s;
+}
+
+/*# sourceMappingURL=pico-mod.css.map */

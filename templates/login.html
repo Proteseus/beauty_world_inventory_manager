@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block title %} Sign In {% endblock title %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="access-warning">{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    <form class="container" id="login-page" name="item-edit" action="/login" method="post">
+        <label for="username">
+            UserName:
+        </label>
+            <input type="text" name="username" placeholder="username" />
+        <label for="password">
+            Password:
+        </label>
+            <input type="text" name="password" placeholder="Password" />
+        <input type="submit" value="Login">
+        <a class="signup" href="/signup">SignUp</a>
+    </form>
+
+{% endblock content %}

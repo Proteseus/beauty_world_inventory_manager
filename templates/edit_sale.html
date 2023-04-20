@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+{% block title %} {{data['name']}} {% endblock title %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="access-warning">{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    <form class="container" id="item-edit-form" name="sale-edit" action="/edit_sale/{{ item_id }}" method="post">
+        <label for="name">
+            Name:
+        </label>
+            <input type="text" name="name" value="{{ data[0] }}" />
+        <label for="quantity">
+            Quantity:
+        </label>
+            <input type="text" name="quantity" value={{ data[2] }} />
+        <input type="submit" value="Save">
+    </form>
+
+{% endblock content %}

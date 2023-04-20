@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %} Beauty World Inventory Manager {% endblock title %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="access-warning">{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    <table class="container">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Item Desc</th>
+                <th scope="col">Unit Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Total</th>
+                <th scope="col">VAT</th>
+                <th scope="col">Customer</th>
+                <th scope="col">Phone Number</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entry in data %}
+            <tr>
+                {% for key in entry %}
+                    <td>{{ key }}</td>
+                {% endfor %}
+                <td><a id='edit' role="button" href="/edit_sale/{{entry[0]}}">Edit</a></td>
+                <td><a id='delete' role="button" href="/delete_sale/{{ entry[0] }}:{{ entry[1] }}">Delete</a></td>
+            </tr>
+        {% endfor %}
+        <tbody>
+    </table>
+{% endblock %}

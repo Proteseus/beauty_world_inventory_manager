@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+{% block title %} Add Item {% endblock title %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="access-warning">{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    <form class="container add-items" id="item-edit-form" name="item-edit" action="/add_supplier" method="post">
+        <label class="col-0" for="item">
+            Item:
+        </label>
+            <input class="col-0" type="text" name="item" />
+        <label class="col-0" for="quantity">
+            Quantity:
+        </label>
+            <input class="col-0" type="number" name="quantity" />
+        <label class="col-0" for="total">
+            Total:
+        </label>
+            <input class="col-0" type="number" name="total" />
+        <label class="col-0" for="name">
+            Name:
+        </label>
+            <input class="col-0" type="text" name="name" />
+        <label class="col-0" for="phone">
+            Phone:
+        </label>
+            <input class="col-0" type="text" name="phone" />
+        <button class="col-0" type="submit">Save</button>
+    </form>
+
+{% endblock content %}

@@ -1,0 +1,54 @@
+{% extends 'layout.html' %}
+{% block title %} Add Item {% endblock title %}
+
+{% block content %}
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <p id="access-warning">{{ messages[0] }}</p>
+        {% endif %}
+    {% endwith %}
+    <form class="container add-items" id="item-add-form" name="item-edit" action="/add" method="post">
+        <label class="col-1 row-1" for="name">
+            Name:
+        </label>
+            <input class="col-1" type="text" name="name" />
+        <label class="col-2 row-1" for="category">
+            Category:
+        </label>
+            <input class="col-2" type="text" name="category" />
+        <label class="col-1 row-2" for="made_in">
+            Made in:
+        </label>
+            <input class="col-1" type="text" name="made_in" />
+        <label class="col-2 row-2" for="size">
+            Size:
+        </label>
+            <input class="col-2" type="number" name="size" />
+        <label class="col-1 row-3" for="unit">
+            Unit:
+        </label>
+            <input class="col-1" type="text" name="unit" />
+        <label class="col-2 row-3" for="quantity">
+            Quantity:
+        </label>
+            <input class="col-2" type="number" name="quantity" />
+        <label class="col-1 row-4" for="barcode">
+            Barcode:
+        </label>
+            <input class="col-1" type="number" name="barcode" />
+        <label class="col-2 row-4" for="price">
+            Unit Price:
+        </label>
+            <input class="col-2" type="number" name="price" step=".01" />
+        <label class="col-1 row-5" for="profit">
+            Profit:
+        </label>
+            <input class="col-1" type="number" name="profit" />
+        <label class="col-2 row-5" for="expiry_date">
+            Expiry Date:
+        </label>
+            <input class="col-2" type="date" name="expiry_date" />
+        <button class="col-0" type="submit">Save</button>
+    </form>
+
+{% endblock content %}
